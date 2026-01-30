@@ -11,7 +11,7 @@ Esta configuración realiza automáticamente lo siguiente:
 *   **Aplica reglas de formato** básicas (como formatear al guardar).
 *   **Reduce la telemetría** del editor.
 
-## 🧩 Lista de extensiones principales
+## 🧩 Lista de extensiones
 
 | Extensión | Descripción |
 | :--- | :--- |
