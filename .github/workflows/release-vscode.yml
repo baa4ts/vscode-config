@@ -1,67 +1,28 @@
-name: Release .vscode Configuration
+name: Backup VSCode Config
 
 on:
-  workflow_dispatch:  # Permite ejecución manual
   push:
-    tags:
-      - 'v*.*.*'  # Ejemplo: v1.0.0, v2.1.3
+    paths: ['.vscode/**']
+  workflow_dispatch:
 
 jobs:
-  build-and-release:
+  backup:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout repositorio
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          
-      - name: Verificar existencia de .vscode
-        id: check_vscode
+      - uses: actions/checkout@v4
+      
+      - name: Create backup
         run: |
+          mkdir -p backup
           if [ -d ".vscode" ]; then
-            echo "✅ Carpeta .vscode encontrada"
-            echo "vscode_exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "❌ No existe la carpeta .vscode"
-            echo "vscode_exists=false" >> $GITHUB_OUTPUT
+            tar -czf backup/vscode-config.tar.gz .vscode/
+            echo "📦 Backup creado: backup/vscode-config.tar.gz"
+            ls -la backup/
           fi
           
-      - name: Comprimir configuración de VSCode
-        if: steps.check_vscode.outputs.vscode_exists == 'true'
-        run: |
-          # Crear timestamp para el nombre del archivo
-          TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-          
-          # Crear archivo zip
-          zip -r vscode-config-${{ github.ref_name }}.zip .vscode/
-          
-          # Opcional: listar contenido del zip
-          unzip -l vscode-config-${{ github.ref_name }}.zip
-          
-      - name: Subir como Release Asset
-        uses: softprops/action-gh-release@v1
-        if: steps.check_vscode.outputs.vscode_exists == 'true'
+      - name: Upload backup
+        uses: actions/upload-artifact@v4
         with:
-          tag_name: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
-          body: |
-            Configuración de VSCode incluida en este release.
-            
-            Contenido de .vscode/:
-            - settings.json
-            - extensions.json
-            - launch.json
-            - tasks.json
-          draft: false
-          prerelease: false
-          files: |
-            vscode-config-${{ github.ref_name }}.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Mostrar advertencia si no existe .vscode
-        if: steps.check_vscode.outputs.vscode_exists == 'false'
-        run: |
-          echo "⚠️  No se pudo crear el release porque no existe la carpeta .vscode"
-          echo "Crea la carpeta .vscode con tu configuración y vuelve a intentar"
+          name: vscode-backup
+          path: backup/
+          retention-days: 30
