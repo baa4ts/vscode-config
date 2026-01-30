@@ -7,7 +7,7 @@
             "command": "powershell",
             "args": [
                 "-Command",
-                "$extensionsPath = Join-Path '${workspaceFolder}' '.vscode\\extensions.json'; if (Test-Path $extensionsPath) { $json = Get-Content $extensionsPath -Raw | ConvertFrom-Json; if ($json.recommendations) { $json.recommendations | ForEach-Object { code --install-extension $_ --force } }; if ($json.unwantedRecommendations) { $json.unwantedRecommendations | ForEach-Object { code --uninstall-extension $_ --force } } } else { Write-Error 'No se encontró el archivo .vscode\\extensions.json' }"
+                "$extensionsPath = Join-Path '${workspaceFolder}' '.vscode/extensions.json'; if (Test-Path $extensionsPath) { $json = Get-Content $extensionsPath -Raw | ConvertFrom-Json; if ($json.recommendations) { $json.recommendations | ForEach-Object { code --install-extension $_ --force } }; if ($json.unwantedRecommendations) { $json.unwantedRecommendations | ForEach-Object { code --uninstall-extension $_ --force } } } else { Write-Error 'No se encontró el archivo .vscode\\extensions.json' }"
             ],
             "runOptions": {
                 "runOn": "folderOpen"
