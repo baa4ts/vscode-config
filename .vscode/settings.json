@@ -1,0 +1,24 @@
+{
+    // ===== CONFIGURACIÓN DE EDITOR Y FORMATO =====
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.autoIndentOnPaste": true,
+    // ===== CONFIGURACIÓN DE APARIENCIA =====
+    "workbench.colorTheme": "Tokyo Night Storm",
+    "workbench.iconTheme": "material-icon-theme",
+    // ===== DESHABILITAR GITHUB COPILOT Y AI =====
+    "github.copilot.enable": {
+        "*": false
+    },
+    "github.copilot.editor.enableAutoCompletions": false,
+    "github.copilot.editor.enableCodeActions": false,
+    "github.copilot.nextEditSuggestions.enabled": false,
+    "github.copilot.renameSuggestions.triggerAutomatically": false,
+    "chat.disableAIFeatures": true,
+    "chat.commandCenter.enabled": false,
+    // ===== CONFIGURACIÓN DE TELEMETRÍA Y ACTUALIZACIONES =====
+    "telemetry.telemetryLevel": "off",
+    "telemetry.editStats.enabled": false,
+    "telemetry.feedback.enabled": false,
+    "update.enableWindowsBackgroundUpdates": false
+}
