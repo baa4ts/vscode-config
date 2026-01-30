@@ -1,6 +1,8 @@
-name: Quick VSCode ZIP Release
+name: Release VSCode Config
 
-on: workflow_dispatch
+on:
+  push:
+    paths: ['.vscode/**']
 
 permissions:
   contents: write
@@ -10,11 +12,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: zip -r vscode-config.zip .vscode/
-      - uses: marvinpinto/action-automatic-releases@latest
+      
+      - name: Create version tag
+        id: tag
+        run: |
+          # Crear tag único basado en timestamp
+          TAG="v$(date +'%Y.%m.%d.%H%M%S')"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          
+          # Crear el tag localmente
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git tag "$TAG"
+          git push origin "$TAG"
+          
+      - name: Create ZIP
+        run: |
+          zip -r "vscode-config-${{ steps.tag.outputs.tag }}.zip" .vscode/
+          
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: "vscode-config"
-          title: "VSCode Configuration"
-          files: |
-            vscode-config.zip
+          tag_name: ${{ steps.tag.outputs.tag }}
+          release_name: "VSCode Config ${{ steps.tag.outputs.tag }}"
+          body: "VSCode configuration files"
+          draft: false
+          prerelease: false
+          asset_path: "vscode-config-${{ steps.tag.outputs.tag }}.zip"
+          asset_name: "vscode-config.zip"
+          asset_content_type: application/zip
