@@ -31,5 +31,5 @@ Esta configuración realiza automáticamente lo siguiente:
 3.  **Asegúrate de que el comando `code` esté disponible** en tu sistema. Para ello, en VS Code, abre la Paleta de Comandos (`Ctrl+Shift+P`), busca y ejecuta **"Shell Command: Install 'code' command in PATH"**.
 4.  Cierra y vuelve a abrir la carpeta de tu proyecto en VS Code. La primera vez, debes **permitir la ejecución automática de tareas** cuando te lo pregunte.
 
-> [!DANGER]
+> [!CAUTION]
 > **Nota:** El archivo `tasks.json` proporcionado está configurado para **Windows**. Si usas Linux o macOS, necesitarás un comando diferente (normalmente basado en `bash` y `jq`).
