@@ -1,28 +1,20 @@
-name: Backup VSCode Config
+name: Quick VSCode ZIP Release
 
-on:
-  push:
-    paths: ['.vscode/**']
-  workflow_dispatch:
+on: workflow_dispatch
+
+permissions:
+  contents: write
 
 jobs:
-  backup:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Create backup
-        run: |
-          mkdir -p backup
-          if [ -d ".vscode" ]; then
-            tar -czf backup/vscode-config.tar.gz .vscode/
-            echo "📦 Backup creado: backup/vscode-config.tar.gz"
-            ls -la backup/
-          fi
-          
-      - name: Upload backup
-        uses: actions/upload-artifact@v4
+      - run: zip -r vscode-config.zip .vscode/
+      - uses: marvinpinto/action-automatic-releases@latest
         with:
-          name: vscode-backup
-          path: backup/
-          retention-days: 30
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: "vscode-config"
+          title: "VSCode Configuration"
+          files: |
+            vscode-config.zip
