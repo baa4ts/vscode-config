@@ -1,7 +1,7 @@
 # Configuración Personal de VS Code
 
 Una configuración sencilla para Visual Studio Code que deshabilita las funciones de IA/Copilot y establece un entorno de desarrollo personalizado y automatizado.
-
+[![Release VSCode Config](https://github.com/baa4ts/vscode-config/actions/workflows/release-vscode.yml/badge.svg)](https://github.com/baa4ts/vscode-config/actions/workflows/release-vscode.yml)
 ## 📋 Qué hace esta configuración
 
 Esta configuración realiza automáticamente lo siguiente:
