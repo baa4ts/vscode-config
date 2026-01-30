@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "enkia.tokyo-night",
+        "PKief.material-icon-theme",
+        "usernamehw.errorlens",
+        "rangav.vscode-thunder-client",
+        "aaron-bond.better-comments"
+    ],
+    "unwantedRecommendations": [
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
+    ]
+}
